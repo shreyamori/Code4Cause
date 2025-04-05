@@ -137,7 +137,6 @@
     <a href="home" class="footer-btn active">💬 Chat</a>
     <a href="concepts" class="footer-btn">📘 Concepts</a>
   </footer>
-
   <script>
     const chatBox = document.getElementById("chat-box");
     const inputBox = document.getElementById("user-input");
@@ -155,8 +154,10 @@
       const input = inputBox.value.trim();
       if (!input) return;
 
-      const interests = "football"; 
-      const formattedInput = "Explain " + input + " using metaphors relating to " + interests + ". Explain using plain text and avoid markdown and Latex." ;
+      const selectedInterests = {{ selected_interests | tojson | safe }};
+      const interestText = selectedInterests.length > 0 ? selectedInterests.join(" and "): "fun topics";
+      const formattedInput = "Explain " + input + " using metaphors relating to " + interestText + ". Explain using plain text and avoid markdown and LaTeX. Avoid using special characters in the response.";
+
       const isImagePrompt = input.toLowerCase().includes("generate image") ||
                             input.toLowerCase().includes("create image") ||
                             input.toLowerCase().includes("draw") ||

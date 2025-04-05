@@ -49,9 +49,9 @@ def home():
         subject_text = subject.title()
         message = f"Explain '{concept}' to a {grade_text} student interested in {subject_text} using examples from {interests_text}."
 
-        return render_template("index.html", prefill_message=message)
+        return render_template("index.html", prefill_message=message, selected_interests=selected_interests)
 
-    return render_template("index.html", prefill_message="")
+    return render_template("index.html", prefill_message="", selected_interests=[])
 
 
 @app.route("/interests", methods=["GET", "POST"])
