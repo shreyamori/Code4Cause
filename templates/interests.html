@@ -15,31 +15,37 @@
         }
 
         h1 {
-            margin-bottom: 10px;
-        }
-
-        .interests-display {
-            background-color: #ffe493;
-            color: #1f8abe;
-            padding: 20px;
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            width: fit-content;
-            font-size: 1.2em;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .form-box {
             background-color: #fff;
-            padding: 25px;
+            padding: 30px;
             border-radius: 16px;
             box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-            width: 320px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        details {
+            margin-bottom: 20px;
+            border: 1px solid #1f8abe;
+            border-radius: 12px;
+            padding: 15px;
+            background-color: #f7ffff;
+        }
+
+        summary {
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            color: #1f8abe;
+            list-style: none;
         }
 
         label {
             display: block;
-            margin: 12px 0;
+            margin: 10px 0 0 10px;
             font-size: 1em;
         }
 
@@ -64,38 +70,75 @@
 <body>
     <h1>🌟 My Interests Page</h1>
 
-    <div class="interests-display">
-        {% if interests %}
-        <div class="interests-display">
-            <strong>Your Interests:</strong>
-            {% for interest in interests %}
-                {% if interest == "Technology" %} 💻 Technology
-                {% elif interest == "Art" %} 🎨 Art
-                {% elif interest == "Music" %} 🎵 Music
-                {% elif interest == "Travel" %} ✈️ Travel
-                {% elif interest == "Sports" %} ⚽ Sports
-                {% elif interest == "Cooking" %} 🍳 Cooking
-                {% else %} {{ interest }}
-                {% endif %}
-                {% if not loop.last %}&nbsp;&nbsp;{% endif %}
-            {% endfor %}
-        </div>
-    {% else %}
-        <div class="interests-display">
-            <em>You haven't selected any interests yet.</em>
-        </div>
-    {% endif %}
-    
-    </div>
-
     <div class="form-box">
         <form action="/interests" method="POST">
-            <label><input type="checkbox" name="interests" value="Technology"> 💻 Technology</label>
-            <label><input type="checkbox" name="interests" value="Art"> 🎨 Art</label>
-            <label><input type="checkbox" name="interests" value="Music"> 🎵 Music</label>
-            <label><input type="checkbox" name="interests" value="Travel"> ✈️ Travel</label>
-            <label><input type="checkbox" name="interests" value="Sports"> ⚽ Sports</label>
-            <label><input type="checkbox" name="interests" value="Cooking"> 🍳 Cooking</label>
+
+            <details open>
+                <summary>💻 Technology</summary>
+                <label><input type="checkbox" name="interests" value="AI" {% if 'AI' in interests %}checked{% endif %}> AI & Machine Learning</label>
+                <label><input type="checkbox" name="interests" value="Web Dev" {% if 'Web Dev' in interests %}checked{% endif %}> Web Development</label>
+                <label><input type="checkbox" name="interests" value="App Dev" {% if 'App Dev' in interests %}checked{% endif %}> App Development</label>
+                <label><input type="checkbox" name="interests" value="Cybersecurity" {% if 'Cybersecurity' in interests %}checked{% endif %}> Cybersecurity</label>
+                <label><input type="checkbox" name="interests" value="UIUX" {% if 'UIUX' in interests %}checked{% endif %}> UI/UX</label>
+            </details>
+
+            <details>
+                <summary>🎨 Art</summary>
+                <label><input type="checkbox" name="interests" value="Painting" {% if 'Painting' in interests %}checked{% endif %}> Digital Painting</label>
+                <label><input type="checkbox" name="interests" value="Graphic Design" {% if 'Graphic Design' in interests %}checked{% endif %}> Graphic Design</label>
+                <label><input type="checkbox" name="interests" value="Animation" {% if 'Animation' in interests %}checked{% endif %}> Animation</label>
+            </details>
+
+            <details>
+                <summary>🎵 Music</summary>
+                <label><input type="checkbox" name="interests" value="Piano" {% if 'Piano' in interests %}checked{% endif %}> Piano</label>
+                <label><input type="checkbox" name="interests" value="Guitar" {% if 'Guitar' in interests %}checked{% endif %}> Guitar</label>
+                <label><input type="checkbox" name="interests" value="Music Production" {% if 'Music Production' in interests %}checked{% endif %}> Music Production</label>
+            </details>
+
+            <details>
+                <summary>✈️ Travel</summary>
+                <label><input type="checkbox" name="interests" value="Europe" {% if 'Europe' in interests %}checked{% endif %}> Europe</label>
+                <label><input type="checkbox" name="interests" value="Road Trips" {% if 'Road Trips' in interests %}checked{% endif %}> Road Trips</label>
+                <label><input type="checkbox" name="interests" value="Adventure" {% if 'Adventure' in interests %}checked{% endif %}> Adventure Travel</label>
+            </details>
+
+            <details>
+                <summary>⚽ Sports</summary>
+                <label><input type="checkbox" name="interests" value="Football" {% if 'Football' in interests %}checked{% endif %}> Football</label>
+                <label><input type="checkbox" name="interests" value="Tennis" {% if 'Tennis' in interests %}checked{% endif %}> Tennis</label>
+                <label><input type="checkbox" name="interests" value="Basketball" {% if 'Basketball' in interests %}checked{% endif %}> Basketball</label>
+            </details>
+
+            <details>
+                <summary>🍳 Cooking</summary>
+                <label><input type="checkbox" name="interests" value="Baking" {% if 'Baking' in interests %}checked{% endif %}> Baking</label>
+                <label><input type="checkbox" name="interests" value="Indian Cuisine" {% if 'Indian Cuisine' in interests %}checked{% endif %}> Indian Cuisine</label>
+                <label><input type="checkbox" name="interests" value="Vegan" {% if 'Vegan' in interests %}checked{% endif %}> Vegan Cooking</label>
+            </details>
+
+            <details>
+                <summary>📚 Reading</summary>
+                <label><input type="checkbox" name="interests" value="Fiction" {% if 'Fiction' in interests %}checked{% endif %}> Fiction</label>
+                <label><input type="checkbox" name="interests" value="Poetry" {% if 'Poetry' in interests %}checked{% endif %}> Poetry</label>
+                <label><input type="checkbox" name="interests" value="Biographies" {% if 'Biographies' in interests %}checked{% endif %}> Biographies</label>
+            </details>
+
+            <details>
+                <summary>🚀 Entrepreneurship</summary>
+                <label><input type="checkbox" name="interests" value="Startups" {% if 'Startups' in interests %}checked{% endif %}> Startups</label>
+                <label><input type="checkbox" name="interests" value="VC" {% if 'VC' in interests %}checked{% endif %}> Venture Capital</label>
+                <label><input type="checkbox" name="interests" value="Product Dev" {% if 'Product Dev' in interests %}checked{% endif %}> Product Development</label>
+            </details>
+
+            <details>
+                <summary>🌍 Languages</summary>
+                <label><input type="checkbox" name="interests" value="Spanish" {% if 'Spanish' in interests %}checked{% endif %}> Spanish</label>
+                <label><input type="checkbox" name="interests" value="Tamil" {% if 'Tamil' in interests %}checked{% endif %}> Tamil</label>
+                <label><input type="checkbox" name="interests" value="Kannada" {% if 'Kannada' in interests %}checked{% endif %}> Kannada</label>
+                <label><input type="checkbox" name="interests" value="ASL" {% if 'ASL' in interests %}checked{% endif %}> ASL</label>
+            </details>
+
             <button class="submit-btn" type="submit">Update Interests</button>
         </form>
     </div>
