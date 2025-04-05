@@ -115,16 +115,7 @@
     <h1>🌟 My Interests Page</h1>
 
     <div class="form-box">
-<<<<<<< HEAD
-        <div class="notification" id="notification">Interests updated!</div>
-
-        <!-- 🔁 Pointing to new backend route -->
-        <form action="/save-interests" method="POST" onsubmit="prepareAndSubmit(event)">
-            <input type="hidden" name="interests_list" id="interests_list">
-=======
-      
         <form action="/interests" method="POST" onsubmit="showNotification(event)">
->>>>>>> a26597a0994dd8dfb99d233621307f3f18f95f80
             <details open>
                 <summary>⚽ Sports</summary>
                 <label><input type="checkbox" name="interests" value="Football" {% if 'Football' in interests %}checked{% endif %}> Football</label>
@@ -192,7 +183,7 @@
             </details>
     
             <details>
-                <summary>🧪 STEM (K–12)</summary>
+                <summary>🧪 STEM (K-12)</summary>
                 <label><input type="checkbox" name="interests" value="Math" {% if 'Math' in interests %}checked{% endif %}> Math Competitions</label>
                 <label><input type="checkbox" name="interests" value="Science Olympiad" {% if 'Science Olympiad' in interests %}checked{% endif %}> Science Olympiad</label>
                 <label><input type="checkbox" name="interests" value="Coding" {% if 'Coding' in interests %}checked{% endif %}> Coding Challenges</label>
