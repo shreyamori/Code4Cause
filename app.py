@@ -96,7 +96,6 @@ def chat():
 @app.route('/image', methods=['POST'])
 def generate_image():
     prompt = request.json.get("prompt")
-
     safe_prompt = f"Generate an educational and safe illustration: {prompt}"
 
     try:

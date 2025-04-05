@@ -127,7 +127,7 @@
     <textarea id="user-input" placeholder="Enter a topic to explore!">{{ prefill_message }}</textarea>
     <div style="margin-bottom: 10px;">
       <button onclick="sendMessage()">Send</button>
-      <button onclick="clearMessages()" style="margin-left: 10px; background-color: #f44336;">Clear Chat</button>
+      <button onclick="clearMessages()" style="margin-left: 10px; background-color: #ffc925;">Clear Chat</button>
     </div>
     <div id="chat-box"></div>
   </div>
@@ -155,7 +155,8 @@
       const input = inputBox.value.trim();
       if (!input) return;
 
-      const interests = "football"; // You can later make this dynamic
+      const interests = "football"; 
+      const formattedInput = "Explain " + input + " using metaphors relating to " + interests + ". Explain using plain text and avoid markdown and Latex." ;
       const isImagePrompt = input.toLowerCase().includes("generate image") ||
                             input.toLowerCase().includes("create image") ||
                             input.toLowerCase().includes("draw") ||
@@ -166,7 +167,6 @@
         renderMessages();
 
         try {
-          // Ask GPT-4o to rephrase the image prompt based on conversation
           const gptRes = await fetch("/chat", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -176,7 +176,6 @@
           const gptData = await gptRes.json();
           const rephrasedPrompt = gptData.reply;
 
-          // Send rephrased prompt to image generator
           const imageRes = await fetch("/image", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -184,7 +183,7 @@
           });
 
           const imageData = await imageRes.json();
-          messages.pop(); // remove "Generating..."
+          messages.pop(); 
 
           messages.push({ role: "user", content: input });
 
@@ -212,15 +211,16 @@
         messages.push({ role: "assistant", content: "Connexus is thinking..." });
         renderMessages();
 
+        messages.push({ role: "user", content: formattedInput });
         try {
           const res = await fetch("/chat", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ messages }),
           });
-
+          messages.pop()
           const data = await res.json();
-          messages.pop(); // remove "thinking..."
+          messages.pop(); 
           messages.push({ role: "assistant", content: data.reply || "No response from Connexus." });
           renderMessages();
         } catch (err) {

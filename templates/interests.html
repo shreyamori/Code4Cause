@@ -115,19 +115,26 @@
     <h1>🌟 My Interests Page</h1>
 
     <div class="form-box">
+<<<<<<< HEAD
         <div class="notification" id="notification">Interests updated!</div>
 
         <!-- 🔁 Pointing to new backend route -->
         <form action="/save-interests" method="POST" onsubmit="prepareAndSubmit(event)">
             <input type="hidden" name="interests_list" id="interests_list">
+=======
+      
+        <form action="/interests" method="POST" onsubmit="showNotification(event)">
+>>>>>>> a26597a0994dd8dfb99d233621307f3f18f95f80
             <details open>
-                <summary>💻 Technology</summary>
-                <label><input type="checkbox" name="interests" value="AI" {% if 'AI' in interests %}checked{% endif %}> AI & Machine Learning</label>
-                <label><input type="checkbox" name="interests" value="Web Dev" {% if 'Web Dev' in interests %}checked{% endif %}> Web Development</label>
-                <label><input type="checkbox" name="interests" value="App Dev" {% if 'App Dev' in interests %}checked{% endif %}> App Development</label>
-                <label><input type="checkbox" name="interests" value="Cybersecurity" {% if 'Cybersecurity' in interests %}checked{% endif %}> Cybersecurity</label>
-                <label><input type="checkbox" name="interests" value="UIUX" {% if 'UIUX' in interests %}checked{% endif %}> UI/UX</label>
-                <label><input type="checkbox" name="interests" value="Robotics" {% if 'Robotics' in interests %}checked{% endif %}> Robotics</label>
+                <summary>⚽ Sports</summary>
+                <label><input type="checkbox" name="interests" value="Football" {% if 'Football' in interests %}checked{% endif %}> Football</label>
+                <label><input type="checkbox" name="interests" value="Tennis" {% if 'Tennis' in interests %}checked{% endif %}> Tennis</label>
+                <label><input type="checkbox" name="interests" value="Basketball" {% if 'Basketball' in interests %}checked{% endif %}> Basketball</label>
+                <label><input type="checkbox" name="interests" value="Dance" {% if 'Dance' in interests %}checked{% endif %}> Dance</label>
+                <label><input type="checkbox" name="interests" value="Cheer" {% if 'Cheer' in interests %}checked{% endif %}> Cheer</label>
+                <label><input type="checkbox" name="interests" value="Track" {% if 'Track' in interests %}checked{% endif %}> Track & Field</label>
+                <label><input type="checkbox" name="interests" value="Volleyball" {% if 'Volleyball' in interests %}checked{% endif %}> Volleyball</label>
+                <label><input type="checkbox" name="interests" value="Baseball" {% if 'Baseball' in interests %}checked{% endif %}> Baseball</label>
             </details>
     
             <details>
@@ -158,15 +165,13 @@
             </details>
     
             <details>
-                <summary>⚽ Sports</summary>
-                <label><input type="checkbox" name="interests" value="Football" {% if 'Football' in interests %}checked{% endif %}> Football</label>
-                <label><input type="checkbox" name="interests" value="Tennis" {% if 'Tennis' in interests %}checked{% endif %}> Tennis</label>
-                <label><input type="checkbox" name="interests" value="Basketball" {% if 'Basketball' in interests %}checked{% endif %}> Basketball</label>
-                <label><input type="checkbox" name="interests" value="Dance" {% if 'Dance' in interests %}checked{% endif %}> Dance</label>
-                <label><input type="checkbox" name="interests" value="Cheer" {% if 'Cheer' in interests %}checked{% endif %}> Cheer</label>
-                <label><input type="checkbox" name="interests" value="Track" {% if 'Track' in interests %}checked{% endif %}> Track & Field</label>
-                <label><input type="checkbox" name="interests" value="Volleyball" {% if 'Volleyball' in interests %}checked{% endif %}> Volleyball</label>
-                <label><input type="checkbox" name="interests" value="Baseball" {% if 'Baseball' in interests %}checked{% endif %}> Baseball</label>
+                <summary>💻 Technology</summary>
+                <label><input type="checkbox" name="interests" value="AI" {% if 'AI' in interests %}checked{% endif %}> AI & Machine Learning</label>
+                <label><input type="checkbox" name="interests" value="Web Dev" {% if 'Web Dev' in interests %}checked{% endif %}> Web Development</label>
+                <label><input type="checkbox" name="interests" value="App Dev" {% if 'App Dev' in interests %}checked{% endif %}> App Development</label>
+                <label><input type="checkbox" name="interests" value="Cybersecurity" {% if 'Cybersecurity' in interests %}checked{% endif %}> Cybersecurity</label>
+                <label><input type="checkbox" name="interests" value="UIUX" {% if 'UIUX' in interests %}checked{% endif %}> UI/UX</label>
+                <label><input type="checkbox" name="interests" value="Robotics" {% if 'Robotics' in interests %}checked{% endif %}> Robotics</label>
             </details>
     
             <details>
@@ -220,6 +225,7 @@
                 <label><input type="checkbox" name="interests" value="German" {% if 'German' in interests %}checked{% endif %}> German</label>
                 <label><input type="checkbox" name="interests" value="Latin" {% if 'Latin' in interests %}checked{% endif %}> Latin</label>
             </details>
+            <div class="notification" id="notification">Interests updated!</div>
 
             <button class="submit-btn" type="submit">Update Interests</button>
         </form>
