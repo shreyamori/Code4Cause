@@ -156,8 +156,12 @@
     <h1>Welcome to Connexus</h1>
     <h5>Connecting your interests and learning to create a more engaging educational experience!</h5>
     <textarea id="user-input" placeholder="Enter a topic to explore!"></textarea><br>
-    <button onclick="sendMessage()">Send</button>
+    <div style="margin-bottom: 10px;">
+      <button onclick="sendMessage()">Send</button>
+      <button onclick="clearMessages()" style="margin-left: 10px; background-color: #f44336;">Clear Chat</button>
+    </div>
     <div id="chat-box"></div>
+    
   </div>
 
   <footer class="footer">
@@ -222,5 +226,16 @@
       chatBox.scrollTop = chatBox.scrollHeight;
     }
   </script>
+  <script>
+    function clearMessages() {
+      messages = [
+        {
+          role: "assistant",
+          content: "Hi there! I'm Conexus — your personal tutor! What topic would you like to explore today, and what are your interests so I can tailor the explanation just for you?",
+        },
+      ];
+      renderMessages();
+    }
+  </script>  
 </body>
 </html>
