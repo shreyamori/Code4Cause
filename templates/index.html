@@ -156,7 +156,7 @@
       if (!input) return;
 
       const interests = "football"; 
-      const formattedInput = "Explain " + input + " and give one example of a topic using " + interests;
+      const formattedInput = "Explain " + input + " using metaphors relating to " + interests;
       const isImagePrompt = input.toLowerCase().includes("generate image") ||
                             input.toLowerCase().includes("create image") ||
                             input.toLowerCase().includes("draw") ||
@@ -170,7 +170,7 @@
           const gptRes = await fetch("/chat", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ messages: [...messages, { role: "user", content: formattedInput }] }),
+            body: JSON.stringify({ messages: [...messages, { role: "user", content: input }] }),
           });
 
           const gptData = await gptRes.json();
@@ -211,13 +211,14 @@
         messages.push({ role: "assistant", content: "Connexus is thinking..." });
         renderMessages();
 
+        messages.push({ role: "user", content: formattedInput });
         try {
           const res = await fetch("/chat", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ messages }),
           });
-
+          messages.pop()
           const data = await res.json();
           messages.pop(); 
           messages.push({ role: "assistant", content: data.reply || "No response from Connexus." });
