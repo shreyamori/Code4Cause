@@ -3,13 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Connexus</title>
-  <!-- MathJax for formulas -->
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <!-- Marked.js for markdown formatting -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -79,7 +72,7 @@
       text-align: left;
       max-height: 400px;
       overflow-y: auto;
-      white-space: normal;
+      white-space: pre-wrap;
     }
 
     .message {
@@ -103,7 +96,7 @@
       display: flex;
       justify-content: space-around;
       padding: 10px 0;
-      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
     }
 
     .footer-btn {
@@ -134,44 +127,10 @@
     <textarea id="user-input" placeholder="Enter a topic to explore!"></textarea><br>
     <div style="margin-bottom: 10px;">
       <button onclick="sendMessage()">Send</button>
-      <button onclick="clearMessages()" style="margin-left: 10px; background-color: #fbc72b;">Clear Chat</button>
+      <button onclick="clearMessages()" style="margin-left: 10px; background-color: #f44336;">Clear Chat</button>
     </div>
     <div id="chat-box"></div>
   </div>
-
-  <footer class="footer">
-    <a href="interests.html" class="footer-btn">🌟 Interests</a>
-    <a href="chat.html" class="footer-btn active">💬 Chat</a>
-    <a href="concepts.html" class="footer-btn">📘 Concepts</a>
-  </footer>
-
-  <script>
-    async function sendMessage() {
-      let interests = "football"; // you can dynamically change this later
-      let input = document.getElementById("user-input").value;
-      input = "Explain " + input + " to a student who is interested in " + interests + ". Make the explanation clear and use an example that involves " + interests + " to help them understand.";
-      const resBox = document.getElementById("response-box");
-      resBox.innerHTML = "Loading...";
-  
-      const res = await fetch("/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: input })
-      });
-  
-      const data = await res.json();
-      resBox.innerHTML = data.reply || data.error;
-    }
-  
-    window.onload = function () {
-      const preset = {{ preset_message|tojson }};
-      if (preset && document.getElementById("user-input")) {
-        document.getElementById("user-input").value = preset;
-      }
-    };
-  </script>
-  
-
 
   <footer class="footer">
     <a href="interests" class="footer-btn">🌟 Interests</a>
@@ -182,10 +141,11 @@
   <script>
     const chatBox = document.getElementById("chat-box");
     const inputBox = document.getElementById("user-input");
+
     let messages = [
       {
         role: "assistant",
-        content: "Hi there! I'm Conexus — your personal tutor! What topic would you like to explore today, and what are your interests so I can tailor the explanation just for you?",
+        content: "Hi there! I'm Connexus — your personal tutor! What topic would you like to explore today, and what are your interests so I can tailor the explanation just for you?",
       },
     ];
 
@@ -195,33 +155,82 @@
       const input = inputBox.value.trim();
       if (!input) return;
 
-      const interests = "football";
-      const formattedInput = `Explain ${input} to a student who is interested in ${interests}. Make the explanation clear and use an example that involves ${interests} to help them understand.`;
+      const interests = "football"; // You can later make this dynamic
+      const isImagePrompt = input.toLowerCase().includes("generate image") ||
+                            input.toLowerCase().includes("create image") ||
+                            input.toLowerCase().includes("draw") ||
+                            input.toLowerCase().includes("visualize");
 
-      messages.push({ role: "user", content: formattedInput });
-      renderMessages();
-      inputBox.value = "";
-
-      messages.push({ role: "assistant", content: "Conexus is thinking..." });
-      renderMessages();
-
-      try {
-        const res = await fetch("/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ messages }),
-        });
-
-        const data = await res.json();
-        messages.pop();
-        messages.pop();
-        messages.push({ role: "assistant", content: data.reply || "No response from Conexus." });
+      if (isImagePrompt) {
+        messages.push({ role: "assistant", content: "🖼️ Generating image..." });
         renderMessages();
-      } catch (err) {
-        messages.pop();
-        messages.push({ role: "assistant", content: "Error contacting Conexus." });
+
+        try {
+          // Ask GPT-4o to rephrase the image prompt based on conversation
+          const gptRes = await fetch("/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ messages: [...messages, { role: "user", content: input }] }),
+          });
+
+          const gptData = await gptRes.json();
+          const rephrasedPrompt = gptData.reply;
+
+          // Send rephrased prompt to image generator
+          const imageRes = await fetch("/image", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ prompt: rephrasedPrompt })
+          });
+
+          const imageData = await imageRes.json();
+          messages.pop(); // remove "Generating..."
+
+          messages.push({ role: "user", content: input });
+
+          if (imageData.image) {
+            messages.push({
+              role: "assistant",
+              content: `<img src="${imageData.image}" style="max-width: 100%; border-radius: 10px; margin-top: 10px;" />`
+            });
+          } else {
+            messages.push({ role: "assistant", content: "⚠️ Failed to generate image." });
+          }
+
+          renderMessages();
+        } catch (err) {
+          messages.pop();
+          messages.push({ role: "assistant", content: "❌ Error generating image." });
+          renderMessages();
+        }
+
+      } else {
+        messages.push({ role: "user", content: input });
         renderMessages();
+        inputBox.value = "";
+
+        messages.push({ role: "assistant", content: "Connexus is thinking..." });
+        renderMessages();
+
+        try {
+          const res = await fetch("/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ messages }),
+          });
+
+          const data = await res.json();
+          messages.pop(); // remove "thinking..."
+          messages.push({ role: "assistant", content: data.reply || "No response from Connexus." });
+          renderMessages();
+        } catch (err) {
+          messages.pop();
+          messages.push({ role: "assistant", content: "❌ Error contacting Connexus." });
+          renderMessages();
+        }
       }
+
+      inputBox.value = "";
     }
 
     function renderMessages() {
@@ -230,19 +239,9 @@
         const div = document.createElement("div");
         div.classList.add("message");
         div.classList.add(msg.role === "user" ? "user" : "assistant");
-
-        // Format markdown and render LaTeX
-        const formatted = marked.parse(msg.content);
-        div.innerHTML = `<strong>${msg.role === "user" ? "You" : "Conexus"}:</strong><br>${formatted}`;
-
+        div.innerHTML = `<strong>${msg.role === "user" ? "You" : "Connexus"}:</strong><br>${msg.content}`;
         chatBox.appendChild(div);
       });
-
-      // Trigger MathJax to re-process the math
-      if (window.MathJax) {
-        MathJax.typesetPromise();
-      }
-
       chatBox.scrollTop = chatBox.scrollHeight;
     }
 
@@ -250,7 +249,7 @@
       messages = [
         {
           role: "assistant",
-          content: "Hi there! I'm Conexus — your personal tutor! What topic would you like to explore today, and what are your interests so I can tailor the explanation just for you?",
+          content: "Hi there! I'm Connexus — your personal tutor! What topic would you like to explore today, and what are your interests so I can tailor the explanation just for you?",
         },
       ];
       renderMessages();
