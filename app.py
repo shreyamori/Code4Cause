@@ -5,10 +5,10 @@ import openai
 
 load_dotenv()
 
-# Set up the OpenAI client (new 1.x way)
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 app = Flask(__name__)
+
 @app.route('/')
 def login_page():
     return render_template('login.html')
@@ -27,9 +27,17 @@ def signup():
         return redirect(url_for('login_page'))
     return render_template('signup.html')
 
-@app.route("/home")
+@app.route("/home", methods=["GET", "POST"])
 def home():
+    if request.method == "POST":
+        concept = request.form.get("concept")
+        grade = request.form.get("grade", "").replace("grade", "Grade ")
+        subject = request.form.get("subject", "").capitalize()
+
+        prompt = f"Explain '{concept}' to a {grade} student interested in {subject} in a fun and simple way."
+        return render_template("index.html", preset_message=prompt)
     return render_template("index.html")
+
 
 @app.route("/interests")
 def interests():
@@ -49,8 +57,12 @@ def chat():
             temperature=0.8,
             messages=messages  
         )
+<<<<<<< HEAD
+        reply = response.choices[0].message.content
+=======
 
         reply = response.choices[0].message.content.strip()
+>>>>>>> c9f418fae5773be71a2ce9a66d0e4eb680b0dc2c
         return jsonify({"reply": reply})
 
     except Exception as e:

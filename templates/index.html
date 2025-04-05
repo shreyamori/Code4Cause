@@ -140,6 +140,37 @@
   </div>
 
   <footer class="footer">
+    <a href="interests.html" class="footer-btn">🌟 Interests</a>
+    <a href="chat.html" class="footer-btn active">💬 Chat</a>
+    <a href="concepts.html" class="footer-btn">📘 Concepts</a>
+  </footer>
+
+  <script>
+    async function sendMessage() {
+      let interests = "football";
+      let input = document.getElementById("user-input").value;
+      input = "Explain " + input + " to a student who is interested in " + interests + ". Make the explanation clear and use an example that involves " + interests + " to help them understand.";
+      const resBox = document.getElementById("response-box");
+      resBox.innerHTML = "Loading...";
+
+      const res = await fetch("/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: input })
+      });
+
+      const data = await res.json();
+      resBox.innerHTML = data.reply || data.error;
+    }
+    window.onload = function () {
+      const preset = {{ preset_message|tojson }};
+      if (preset && document.getElementById("user-input")) {
+    document.getElementById("user-input").value = preset;
+  }
+};
+
+  </script>
+  <footer class="footer">
     <a href="interests" class="footer-btn">🌟 Interests</a>
     <a href="home" class="footer-btn active">💬 Chat</a>
     <a href="concepts" class="footer-btn">📘 Concepts</a>
