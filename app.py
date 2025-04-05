@@ -1,4 +1,5 @@
 import os
+import random
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
 from dotenv import load_dotenv
 import openai
@@ -37,34 +38,42 @@ def home():
         grade = request.form.get("grade")
         subject = request.form.get("subject")
 
-        # Generate the prefilled message
+        # Fetch stored interests from session
+        selected_interests = session.get("interests", [])
+        import random
+        sampled_interests = random.sample(selected_interests, min(2, len(selected_interests)))
+        interests_text = " and ".join(sampled_interests) if sampled_interests else "fun topics"
+
+        # Build message
         grade_text = grade.replace("grade", "Grade ").title()
         subject_text = subject.title()
-        message = f"Explain '{concept}' to a {grade_text} student interested in {subject_text} in a fun and simple way."
+        message = f"Explain '{concept}' to a {grade_text} student interested in {subject_text} using examples from {interests_text}."
 
         return render_template("index.html", prefill_message=message)
 
-    # If GET
     return render_template("index.html", prefill_message="")
 
 
-@app.route("/interests")
+@app.route("/interests", methods=["GET", "POST"])
 def interests():
+    if request.method == "POST":
+        selected = request.form.getlist("interests")
+        session["interests"] = selected
+        return redirect(url_for("concepts"))
+
     return render_template("interests.html")
+
+@app.route("/save-interests", methods=["POST"])
+def save_interests():
+    interests_raw = request.form.get("interests_list")
+    if interests_raw:
+        session['interests'] = eval(interests_raw)
+    return redirect(url_for("concepts"))
+
 
 @app.route("/concepts")
 def concepts():
     return render_template("concepts.html")
-
-@app.route('/concept-submit', methods=['POST'])
-def concept_submit():
-    concept = request.form.get("concept")
-    grade = request.form.get("grade")
-    subject = request.form.get("subject")
-    interest = subject.capitalize()
-
-    user_prompt = f"Explain '{concept}' to a {grade.replace('grade', 'Grade ')} student interested in {interest} in a fun and simple way."
-    return render_template("index.html", concept_prompt=user_prompt)
 
 @app.route('/chat', methods=['POST'])
 def chat():

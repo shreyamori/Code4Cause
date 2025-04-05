@@ -117,7 +117,9 @@
     <div class="form-box">
         <div class="notification" id="notification">Interests updated!</div>
 
-        <form action="/interests" method="POST" onsubmit="showNotification(event)">
+        <!-- 🔁 Pointing to new backend route -->
+        <form action="/save-interests" method="POST" onsubmit="prepareAndSubmit(event)">
+            <input type="hidden" name="interests_list" id="interests_list">
             <details open>
                 <summary>💻 Technology</summary>
                 <label><input type="checkbox" name="interests" value="AI" {% if 'AI' in interests %}checked{% endif %}> AI & Machine Learning</label>
@@ -230,13 +232,10 @@
     </footer>
 
     <script>
-        function showNotification(event) {
-            event.preventDefault(); // 🔄 remove this line if your backend handles the form
-            const notification = document.getElementById('notification');
-            notification.style.display = 'block';
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 2000);
+        function prepareAndSubmit(event) {
+            const selected = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+                .map(cb => cb.value);
+            document.getElementById('interests_list').value = JSON.stringify(selected);
         }
     </script>
 </body>

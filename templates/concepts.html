@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Concepts</title>
   <style>
-    body {
+body {
       background-color: #f0f8ff;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       padding: 50px;
@@ -104,8 +104,7 @@
     .footer-btn.active {
       background-color: #ffe493;
       color: #1f8abe;
-    }
-  </style>
+    }  </style>
   <script>
     const concepts = {
       "grade3-math": ["Addition", "Subtraction", "Multiplication", "Division", "Fractions"],
@@ -138,29 +137,29 @@
     };
 
     function updateConcepts() {
-    const grade = document.getElementById('grade').value;
-    const subject = document.getElementById('subject').value;
-    const key = `${grade}-${subject}`;
-    const list = concepts[key] || [];
+      const grade = document.getElementById('grade').value;
+      const subject = document.getElementById('subject').value;
+      const key = `${grade}-${subject}`;
+      const list = concepts[key] || [];
 
-    const container = document.querySelector('.concept-box');
-    container.innerHTML = list.length
-      ? list.map(concept => `
-        <form action="/home" method="POST" class="concept-form">
-          <input type="hidden" name="concept" value="${concept}">
-          <input type="hidden" name="grade" value="${grade}">
-          <input type="hidden" name="subject" value="${subject}">
-          <button type="submit" class="concept-list-item">
-            ${concept}
-            <span class="arrow">&rarr;</span>
-          </button>
-        </form>
-      `).join('')
-      : '';
+      const container = document.querySelector('.concept-box');
+      container.innerHTML = list.length
+        ? list.map(concept => `
+          <form action="/home" method="POST" class="concept-form">
+            <input type="hidden" name="concept" value="${concept}">
+            <input type="hidden" name="grade" value="${grade}">
+            <input type="hidden" name="subject" value="${subject}">
+            <button type="submit" class="concept-list-item">
+              ${concept}
+              <span class="arrow">&rarr;</span>
+            </button>
+          </form>
+        `).join('')
+        : '';
 
-    container.style.display = list.length ? 'block' : 'none';
-  }
-</script>
+      container.style.display = list.length ? 'block' : 'none';
+    }
+  </script>
 </head>
 <body>
   <h1>📘 Concept Explorer</h1>
