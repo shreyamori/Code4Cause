@@ -1,176 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Concepts</title>
-    <style>
-        body {
-            background-color: #9be3df;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding: 50px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #1f8abe;
-            margin-bottom: 80px;
-        }
+  <meta charset="UTF-8" />
+  <title>Concepts</title>
+  <style>
+    body {
+      background-color: #9be3df;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #1f8abe;
+      margin-bottom: 80px;
+    }
 
-        h1 {
-            margin-bottom: 20px;
-        }
+    h1 {
+      margin-bottom: 20px;
+    }
 
-        .selectors {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
+    .selectors {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
 
-        select {
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #1f8abe;
-            background-color: white;
-            color: #1f8abe;
-            font-weight: bold;
-        }
+    select {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #1f8abe;
+      background-color: white;
+      color: #1f8abe;
+      font-weight: bold;
+    }
 
-        .concept-box {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 600px;
-        }
+    .concept-box {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
+    }
 
-        .concept-list-item {
-            background-color: #f7ffff;
-            border: 1px solid #1f8abe;
-            border-radius: 12px;
-            padding: 12px 20px;
-            margin: 10px 0;
-            font-size: 1em;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    .concept-form {
+      margin: 0;
+    }
 
-        .arrow {
-            font-size: 1.2em;
-            color: #1f8abe;
-        }
+    .concept-list-item {
+      background-color: #f7ffff;
+      border: 1px solid #1f8abe;
+      border-radius: 12px;
+      padding: 12px 20px;
+      margin: 10px 0;
+      font-size: 1em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      cursor: pointer;
+      color: #1f8abe;
+      font-weight: bold;
+    }
 
-        .footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #1f8abe;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-        }
+    .concept-list-item:hover {
+      background-color: #e2faff;
+    }
 
-        .footer-btn {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            background-color: #9be3df;
-            padding: 10px 20px;
-            border-radius: 10px;
-            transition: background-color 0.3s;
-        }
+    .arrow {
+      font-size: 1.2em;
+      color: #1f8abe;
+    }
 
-        .footer-btn:hover {
-            background-color: #ffe493;
-            color: #1f8abe;
-        }
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #1f8abe;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    }
 
-        .footer-btn.active {
-            background-color: #ffe493;
-            color: #1f8abe;
-        }
-    </style>
-    <script>
-        const concepts = {
-            "grade3-math": ["Addition", "Subtraction", "Multiplication", "Division", "Fractions"],
-            "grade4-math": ["Long Division", "Decimals", "Geometry", "Multiples & Factors"],
-            "grade5-math": ["Order of Operations", "Volume", "Mixed Numbers", "Graphing"],
-            "grade6-math": ["Ratios", "Percents", "Equations", "Integers"],
-            "grade7-math": ["Proportions", "Expressions", "Probability", "Statistics"],
-            "grade8-math": ["Linear Equations", "Functions", "Exponents", "Pythagorean Theorem"],
+    .footer-btn {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      background-color: #9be3df;
+      padding: 10px 20px;
+      border-radius: 10px;
+      transition: background-color 0.3s;
+    }
 
-            "grade3-science": ["Living vs Nonliving", "Life Cycles", "Weather", "States of Matter"],
-            "grade4-science": ["Ecosystems", "Electricity", "Forces & Motion", "Solar System"],
-            "grade5-science": ["Photosynthesis", "Chemical Reactions", "Energy Types", "Gravity"],
-            "grade6-science": ["Cells", "Human Body Systems", "Matter & Energy", "Weathering"],
-            "grade7-science": ["Genetics", "Evolution", "Newton's Laws", "Climate Change"],
-            "grade8-science": ["Atoms", "Waves", "Magnetism", "Earthquakes"],
+    .footer-btn:hover {
+      background-color: #ffe493;
+      color: #1f8abe;
+    }
 
-            "grade3-english": ["Nouns", "Adjectives", "Reading Comprehension"],
-            "grade4-english": ["Writing Paragraphs", "Verb Tenses", "Summarizing"],
-            "grade5-english": ["Essay Structure", "Themes", "Main Idea & Details"],
-            "grade6-english": ["Plot Elements", "Poetry Forms", "Point of View"],
-            "grade7-english": ["Argumentative Writing", "Tone & Mood", "Symbolism"],
-            "grade8-english": ["Thesis Statements", "Character Development", "Literary Devices"],
+    .footer-btn.active {
+      background-color: #ffe493;
+      color: #1f8abe;
+    }
+  </style>
+  <script>
+    const concepts = {
+      "grade3-math": ["Addition", "Subtraction", "Multiplication", "Division", "Fractions"],
+      "grade4-math": ["Long Division", "Decimals", "Geometry", "Multiples & Factors"],
+      "grade5-math": ["Order of Operations", "Volume", "Mixed Numbers", "Graphing"],
+      "grade6-math": ["Ratios", "Percents", "Equations", "Integers"],
+      "grade7-math": ["Proportions", "Expressions", "Probability", "Statistics"],
+      "grade8-math": ["Linear Equations", "Functions", "Exponents", "Pythagorean Theorem"],
 
-            "grade3-social": ["Communities", "Maps & Globes", "Rules & Laws"],
-            "grade4-social": ["State History", "Regions of the U.S.", "Economy Basics"],
-            "grade5-social": ["Early Explorers", "Branches of Government", "Civil Rights"],
-            "grade6-social": ["World Geography", "Ancient Civilizations", "Trade & Economics"],
-            "grade7-social": ["U.S. Constitution", "Bill of Rights", "Westward Expansion"],
-            "grade8-social": ["Industrial Revolution", "Great Depression", "World Wars"]
-        };
+      "grade3-science": ["Living vs Nonliving", "Life Cycles", "Weather", "States of Matter"],
+      "grade4-science": ["Ecosystems", "Electricity", "Forces & Motion", "Solar System"],
+      "grade5-science": ["Photosynthesis", "Chemical Reactions", "Energy Types", "Gravity"],
+      "grade6-science": ["Cells", "Human Body Systems", "Matter & Energy", "Weathering"],
+      "grade7-science": ["Genetics", "Evolution", "Newton's Laws", "Climate Change"],
+      "grade8-science": ["Atoms", "Waves", "Magnetism", "Earthquakes"],
 
-        function updateConcepts() {
-            const grade = document.getElementById('grade').value;
-            const subject = document.getElementById('subject').value;
-            const key = `${grade}-${subject}`;
-            const list = concepts[key] || [];
+      "grade3-english": ["Nouns", "Adjectives", "Reading Comprehension"],
+      "grade4-english": ["Writing Paragraphs", "Verb Tenses", "Summarizing"],
+      "grade5-english": ["Essay Structure", "Themes", "Main Idea & Details"],
+      "grade6-english": ["Plot Elements", "Poetry Forms", "Point of View"],
+      "grade7-english": ["Argumentative Writing", "Tone & Mood", "Symbolism"],
+      "grade8-english": ["Thesis Statements", "Character Development", "Literary Devices"],
 
-            const container = document.querySelector('.concept-box');
-            container.innerHTML = list.length ? list.map(concept => `
-                <div class="concept-list-item">
-                    ${concept}
-                    <span class="arrow">&rarr;</span>
-                </div>`).join('') : '';
+      "grade3-social": ["Communities", "Maps & Globes", "Rules & Laws"],
+      "grade4-social": ["State History", "Regions of the U.S.", "Economy Basics"],
+      "grade5-social": ["Early Explorers", "Branches of Government", "Civil Rights"],
+      "grade6-social": ["World Geography", "Ancient Civilizations", "Trade & Economics"],
+      "grade7-social": ["U.S. Constitution", "Bill of Rights", "Westward Expansion"],
+      "grade8-social": ["Industrial Revolution", "Great Depression", "World Wars"]
+    };
 
-            container.style.display = list.length ? 'block' : 'none';
-        }
-    </script>
+    function updateConcepts() {
+      const grade = document.getElementById('grade').value;
+      const subject = document.getElementById('subject').value;
+      const key = `${grade}-${subject}`;
+      const list = concepts[key] || [];
+
+      const container = document.querySelector('.concept-box');
+      container.innerHTML = list.length
+        ? list.map(concept => `
+          <form action="/home" method="POST" class="concept-form">
+            <input type="hidden" name="concept" value="${concept}">
+            <button type="submit" class="concept-list-item">
+              ${concept}
+              <span class="arrow">&rarr;</span>
+            </button>
+          </form>
+        `).join('')
+        : '';
+
+      container.style.display = list.length ? 'block' : 'none';
+    }
+  </script>
 </head>
 <body>
-    <h1>📘 Concept Explorer</h1>
+  <h1>📘 Concept Explorer</h1>
 
-    <div class="selectors">
-        <select id="grade" onchange="updateConcepts()">
-            <option value="">Select Grade</option>
-            <option value="grade3">Grade 3</option>
-            <option value="grade4">Grade 4</option>
-            <option value="grade5">Grade 5</option>
-            <option value="grade6">Grade 6</option>
-            <option value="grade7">Grade 7</option>
-            <option value="grade8">Grade 8</option>
-        </select>
+  <div class="selectors">
+    <select id="grade" onchange="updateConcepts()">
+      <option value="">Select Grade</option>
+      <option value="grade3">Grade 3</option>
+      <option value="grade4">Grade 4</option>
+      <option value="grade5">Grade 5</option>
+      <option value="grade6">Grade 6</option>
+      <option value="grade7">Grade 7</option>
+      <option value="grade8">Grade 8</option>
+    </select>
 
-        <select id="subject" onchange="updateConcepts()">
-            <option value="">Select Subject</option>
-            <option value="math">Math</option>
-            <option value="science">Science</option>
-            <option value="english">English</option>
-            <option value="social">Social Studies</option>
-        </select>
-    </div>
+    <select id="subject" onchange="updateConcepts()">
+      <option value="">Select Subject</option>
+      <option value="math">Math</option>
+      <option value="science">Science</option>
+      <option value="english">English</option>
+      <option value="social">Social Studies</option>
+    </select>
+  </div>
 
-    <div class="concept-box"></div>
+  <div class="concept-box"></div>
 
-    <footer class="footer">
-        <a href="interests" class="footer-btn">🌟 Interests</a>
-        <a href="home" class="footer-btn">💬 Chat</a>
-        <a href="concepts" class="footer-btn active">📘 Concepts</a>
-    </footer>
+  <footer class="footer">
+    <a href="interests" class="footer-btn">🌟 Interests</a>
+    <a href="home" class="footer-btn">💬 Chat</a>
+    <a href="concepts" class="footer-btn active">📘 Concepts</a>
+  </footer>
 </body>
 </html>
