@@ -156,7 +156,7 @@
       if (!input) return;
 
       const interests = "football"; 
-      const formattedInput = "Explain " + input + " using metaphors relating to " + interests;
+      const formattedInput = "Explain " + input + " using metaphors relating to " + interests + ". Explain using plain text and avoid markdown and Latex." ;
       const isImagePrompt = input.toLowerCase().includes("generate image") ||
                             input.toLowerCase().includes("create image") ||
                             input.toLowerCase().includes("draw") ||
