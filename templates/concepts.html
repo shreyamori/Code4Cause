@@ -99,15 +99,30 @@
             "grade3-math": ["Addition", "Subtraction", "Multiplication", "Division", "Fractions"],
             "grade4-math": ["Long Division", "Decimals", "Geometry", "Multiples & Factors"],
             "grade5-math": ["Order of Operations", "Volume", "Mixed Numbers", "Graphing"],
+            "grade6-math": ["Ratios", "Percents", "Equations", "Integers"],
+            "grade7-math": ["Proportions", "Expressions", "Probability", "Statistics"],
+            "grade8-math": ["Linear Equations", "Functions", "Exponents", "Pythagorean Theorem"],
+
             "grade3-science": ["Living vs Nonliving", "Life Cycles", "Weather", "States of Matter"],
             "grade4-science": ["Ecosystems", "Electricity", "Forces & Motion", "Solar System"],
             "grade5-science": ["Photosynthesis", "Chemical Reactions", "Energy Types", "Gravity"],
+            "grade6-science": ["Cells", "Human Body Systems", "Matter & Energy", "Weathering"],
+            "grade7-science": ["Genetics", "Evolution", "Newton's Laws", "Climate Change"],
+            "grade8-science": ["Atoms", "Waves", "Magnetism", "Earthquakes"],
+
             "grade3-english": ["Nouns", "Adjectives", "Reading Comprehension"],
             "grade4-english": ["Writing Paragraphs", "Verb Tenses", "Summarizing"],
             "grade5-english": ["Essay Structure", "Themes", "Main Idea & Details"],
+            "grade6-english": ["Plot Elements", "Poetry Forms", "Point of View"],
+            "grade7-english": ["Argumentative Writing", "Tone & Mood", "Symbolism"],
+            "grade8-english": ["Thesis Statements", "Character Development", "Literary Devices"],
+
             "grade3-social": ["Communities", "Maps & Globes", "Rules & Laws"],
             "grade4-social": ["State History", "Regions of the U.S.", "Economy Basics"],
-            "grade5-social": ["Early Explorers", "Branches of Government", "Civil Rights"]
+            "grade5-social": ["Early Explorers", "Branches of Government", "Civil Rights"],
+            "grade6-social": ["World Geography", "Ancient Civilizations", "Trade & Economics"],
+            "grade7-social": ["U.S. Constitution", "Bill of Rights", "Westward Expansion"],
+            "grade8-social": ["Industrial Revolution", "Great Depression", "World Wars"]
         };
 
         function updateConcepts() {
@@ -136,6 +151,9 @@
             <option value="grade3">Grade 3</option>
             <option value="grade4">Grade 4</option>
             <option value="grade5">Grade 5</option>
+            <option value="grade6">Grade 6</option>
+            <option value="grade7">Grade 7</option>
+            <option value="grade8">Grade 8</option>
         </select>
 
         <select id="subject" onchange="updateConcepts()">
