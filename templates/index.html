@@ -2,20 +2,92 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>ChatGPT Wrapper</title>
-  <link rel="stylesheet" href="/static/style.css">
+  <title>Connexus</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f8ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h1 {
+      color: #0077cc;
+      margin-bottom: 10px;
+    }
+
+    h5 {
+      font-weight: normal;
+      margin-bottom: 25px;
+      color: #444;
+    }
+
+    textarea {
+      width: 90%;
+      height: 100px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      resize: none;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding: 10px 25px;
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #005fa3;
+    }
+
+    #response-box {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #eef7ff;
+      border-radius: 10px;
+      text-align: left;
+      white-space: pre-wrap;
+      font-size: 15px;
+      color: #333;
+      border: 1px solid #cce0f5;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
-    <h1>ChatGPT Web App</h1>
-    <textarea id="user-input" placeholder="Type your question..."></textarea>
+    <h1>Welcome to Connexus</h1>
+    <h5>Connecting your interests and learning to create a more engaging educational experience!</h5>
+    <textarea id="user-input" placeholder="Enter a topic to explore!"></textarea><br>
     <button onclick="sendMessage()">Send</button>
     <div id="response-box"></div>
   </div>
 
   <script>
     async function sendMessage() {
-      const input = document.getElementById("user-input").value;
+      let interests = "football";
+      let input = document.getElementById("user-input").value;
+      input = "Explain "+input+" to a student who is interested in " + interests + ". Make the explanation clear and use an example that involves "+interests+" to help them understand.";
       const resBox = document.getElementById("response-box");
       resBox.innerHTML = "Loading...";
 

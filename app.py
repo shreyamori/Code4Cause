@@ -17,7 +17,6 @@ def login_page():
 def login():
     username = request.form['username']
     password = request.form['password']
-    # No authentication check here
     return redirect(url_for('home'))
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -25,7 +24,6 @@ def signup():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        # Normally you'd store this in a database
         return redirect(url_for('login_page'))
     return render_template('signup.html')
 
