@@ -57,12 +57,7 @@ def chat():
             temperature=0.8,
             messages=messages  
         )
-<<<<<<< HEAD
         reply = response.choices[0].message.content
-=======
-
-        reply = response.choices[0].message.content.strip()
->>>>>>> c9f418fae5773be71a2ce9a66d0e4eb680b0dc2c
         return jsonify({"reply": reply})
 
     except Exception as e:
