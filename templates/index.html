@@ -156,6 +156,7 @@
       if (!input) return;
 
       const interests = "football"; 
+      const formattedInput = "Explain " + input + " and give one example of a topic using " + interests;
       const isImagePrompt = input.toLowerCase().includes("generate image") ||
                             input.toLowerCase().includes("create image") ||
                             input.toLowerCase().includes("draw") ||
@@ -169,7 +170,7 @@
           const gptRes = await fetch("/chat", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ messages: [...messages, { role: "user", content: input }] }),
+            body: JSON.stringify({ messages: [...messages, { role: "user", content: formattedInput }] }),
           });
 
           const gptData = await gptRes.json();
