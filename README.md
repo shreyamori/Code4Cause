@@ -12,3 +12,8 @@ pip install -r requirements.txt
 Running server 
 python app.py or python3 app.py
 >>>>>>> 799e4675c0a925d34c222224c8e5eda0d67e54b4
+
+running chatbot:
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+npm run dev
