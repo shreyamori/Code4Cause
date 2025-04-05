@@ -12,7 +12,7 @@
       align-items: center;
       min-height: 100vh;
       margin: 0;
-      padding-bottom: 80px; /* space for footer */
+      padding-bottom: 80px;
     }
 
     .container {
@@ -63,16 +63,28 @@
       background-color: #005fa3;
     }
 
-    #response-box {
+    #chat-box {
       margin-top: 20px;
-      padding: 15px;
       background-color: #eef7ff;
       border-radius: 10px;
-      text-align: left;
-      white-space: pre-wrap;
-      font-size: 15px;
-      color: #333;
+      padding: 15px;
       border: 1px solid #cce0f5;
+      text-align: left;
+      max-height: 400px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+
+    .message {
+      margin-bottom: 15px;
+    }
+
+    .user {
+      color: #1f4e79;
+    }
+
+    .assistant {
+      color: #2c6e49;
     }
 
     .footer {
@@ -84,7 +96,7 @@
       display: flex;
       justify-content: space-around;
       padding: 10px 0;
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
     }
 
     .footer-btn {
@@ -144,8 +156,12 @@
     <h1>Welcome to Connexus</h1>
     <h5>Connecting your interests and learning to create a more engaging educational experience!</h5>
     <textarea id="user-input" placeholder="Enter a topic to explore!"></textarea><br>
-    <button onclick="sendMessage()">Send</button>
-    <div id="response-box"></div>
+    <div style="margin-bottom: 10px;">
+      <button onclick="sendMessage()">Send</button>
+      <button onclick="clearMessages()" style="margin-left: 10px; background-color: #f44336;">Clear Chat</button>
+    </div>
+    <div id="chat-box"></div>
+    
   </div>
 
   <footer class="footer">
@@ -183,6 +199,74 @@
     <a href="interests" class="footer-btn">🌟 Interests</a>
     <a href="home" class="footer-btn active">💬 Chat</a>
     <a href="concepts" class="footer-btn">📘 Concepts</a>
-</footer>
+  </footer>
+
+  <script>
+    const chatBox = document.getElementById("chat-box");
+    const inputBox = document.getElementById("user-input");
+    let messages = [
+      {
+        role: "assistant",
+        content: "Hi there! I'm Conexus — your personal tutor! What topic would you like to explore today, and what are your interests so I can tailor the explanation just for you?",
+      },
+    ];
+
+    renderMessages();
+
+    async function sendMessage() {
+      const input = inputBox.value.trim();
+      if (!input) return;
+
+      const interests = "football";
+      const formattedInput = `Explain ${input} to a student who is interested in ${interests}. Make the explanation clear and use an example that involves ${interests} to help them understand.`;
+      
+      messages.push({ role: "user", content: formattedInput });
+      renderMessages();
+      inputBox.value = "";
+
+      messages.push({ role: "assistant", content: "Conexus is thinking..." });
+      renderMessages();
+
+      try {
+        const res = await fetch("/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ messages }),
+        });
+
+        const data = await res.json();
+        messages.pop(); 
+        messages.push({ role: "assistant", content: data.reply || "No response from Conexus." });
+        renderMessages();
+      } catch (err) {
+        messages.pop();
+        messages.push({ role: "assistant", content: "Error contacting Conexus." });
+        renderMessages();
+      }
+    }
+
+    function renderMessages() {
+      chatBox.innerHTML = "";
+      messages.forEach((msg) => {
+        const div = document.createElement("div");
+        div.classList.add("message");
+        div.classList.add(msg.role === "user" ? "user" : "assistant");
+        div.innerHTML = `<strong>${msg.role === "user" ? "You" : "Conexus"}:</strong> ${msg.content}`;
+        chatBox.appendChild(div);
+      });
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  </script>
+  <script>
+    function clearMessages() {
+      messages = [
+        {
+          role: "assistant",
+          content: "Hi there! I'm Conexus — your personal tutor! What topic would you like to explore today, and what are your interests so I can tailor the explanation just for you?",
+        },
+      ];
+      renderMessages();
+    }
+  </script>  
 </body>
 </html>

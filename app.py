@@ -47,20 +47,51 @@ def interests():
 def concepts():
     return render_template("concepts.html")
 
-@app.route("/chat", methods=["POST"])
+@app.route('/chat', methods=['POST'])
 def chat():
-    user_message = request.json.get("message")
-    print("API Key:", os.getenv("OPENAI_API_KEY"))
+    messages = request.json.get("messages")  
 
     try:
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": user_message}]
+            model="gpt-4o",
+            temperature=0.8,
+            messages=messages  
         )
+<<<<<<< HEAD
         reply = response.choices[0].message.content
+=======
+
+        reply = response.choices[0].message.content.strip()
+>>>>>>> c9f418fae5773be71a2ce9a66d0e4eb680b0dc2c
         return jsonify({"reply": reply})
+
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        print("OpenAI error:", e)
+        return jsonify({"error": "Something went wrong. Please try again."}), 500
+    
+@app.route('/image', methods=['POST'])
+def generate_image():
+    prompt = request.json.get("prompt")
+
+    safe_prompt = f"Generate an educational and safe illustration: {prompt}"
+
+    try:
+        response = client.images.generate(
+            model="dall-e-3", 
+            prompt=safe_prompt,
+            n=1,
+            size="1024x1024"
+        )
+        image_url = response.data[0].url
+        print("Generated image:", image_url)
+        return jsonify({ "image": image_url })
+
+    except openai.OpenAIError as e:
+        print("Image generation error:", e)
+        return jsonify({ "error": str(e) }), 400
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
