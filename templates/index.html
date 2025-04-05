@@ -8,10 +8,11 @@
       font-family: Arial, sans-serif;
       background-color: #f0f8ff;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
       min-height: 100vh;
       margin: 0;
+      padding-bottom: 80px; /* space for footer */
     }
 
     .container {
@@ -22,6 +23,7 @@
       max-width: 600px;
       width: 100%;
       text-align: center;
+      margin-top: 50px;
     }
 
     h1 {
@@ -72,6 +74,38 @@
       color: #333;
       border: 1px solid #cce0f5;
     }
+
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #1f8abe;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    }
+
+    .footer-btn {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      background-color: #9be3df;
+      padding: 10px 20px;
+      border-radius: 10px;
+      transition: background-color 0.3s;
+    }
+
+    .footer-btn:hover {
+      background-color: #ffe493;
+      color: #1f8abe;
+    }
+
+    .footer-btn.active {
+      background-color: #ffe493;
+      color: #1f8abe;
+    }
   </style>
 </head>
 <body>
@@ -83,11 +117,17 @@
     <div id="response-box"></div>
   </div>
 
+  <footer class="footer">
+    <a href="interests.html" class="footer-btn">🌟 Interests</a>
+    <a href="chat.html" class="footer-btn active">💬 Chat</a>
+    <a href="concepts.html" class="footer-btn">📘 Concepts</a>
+  </footer>
+
   <script>
     async function sendMessage() {
       let interests = "football";
       let input = document.getElementById("user-input").value;
-      input = "Explain "+input+" to a student who is interested in " + interests + ". Make the explanation clear and use an example that involves "+interests+" to help them understand.";
+      input = "Explain " + input + " to a student who is interested in " + interests + ". Make the explanation clear and use an example that involves " + interests + " to help them understand.";
       const resBox = document.getElementById("response-box");
       resBox.innerHTML = "Loading...";
 
