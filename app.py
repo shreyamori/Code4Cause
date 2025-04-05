@@ -17,7 +17,7 @@ def login_page():
 def login():
     username = request.form['username']
     password = request.form['password']
-    return redirect(url_for('home'))
+    return redirect(url_for('interests'))
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -30,6 +30,14 @@ def signup():
 @app.route("/home")
 def home():
     return render_template("index.html")
+
+@app.route("/interests")
+def interests():
+    return render_template("interests.html")
+
+@app.route("/concepts")
+def concepts():
+    return render_template("concepts.html")
 
 @app.route("/chat", methods=["POST"])
 def chat():

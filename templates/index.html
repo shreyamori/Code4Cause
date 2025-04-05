@@ -74,6 +74,7 @@
       color: #333;
       border: 1px solid #cce0f5;
     }
+<<<<<<< Updated upstream
 
     .footer {
       position: fixed;
@@ -106,6 +107,39 @@
       background-color: #ffe493;
       color: #1f8abe;
     }
+=======
+    .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #1f8abe;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}
+
+.footer-btn {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    background-color: #9be3df;
+    padding: 10px 20px;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+}
+
+.footer-btn:hover {
+    background-color: #ffe493;
+    color: #1f8abe;
+}
+
+.footer-btn.active {
+    background-color: #ffe493;
+    color: #1f8abe;
+}
+>>>>>>> Stashed changes
   </style>
 </head>
 <body>
@@ -141,5 +175,10 @@
       resBox.innerHTML = data.reply || data.error;
     }
   </script>
+  <footer class="footer">
+    <a href="interests" class="footer-btn">🌟 Interests</a>
+    <a href="home" class="footer-btn active">💬 Chat</a>
+    <a href="concepts" class="footer-btn">📘 Concepts</a>
+</footer>
 </body>
 </html>
