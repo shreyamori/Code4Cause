@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Interests</title>
+    <style>
+        body {
+            background-color: #9be3df;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #1f8abe;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .interests-display {
+            background-color: #ffe493;
+            color: #1f8abe;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            width: fit-content;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        .form-box {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+            width: 320px;
+        }
+
+        label {
+            display: block;
+            margin: 12px 0;
+            font-size: 1em;
+        }
+
+        .submit-btn {
+            background-color: #1f8abe;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #146c94;
+        }
+    </style>
+</head>
+<body>
+    <h1>🌟 My Interests Page</h1>
+
+    <div class="interests-display">
+        {% if interests %}
+        <div class="interests-display">
+            <strong>Your Interests:</strong>
+            {% for interest in interests %}
+                {% if interest == "Technology" %} 💻 Technology
+                {% elif interest == "Art" %} 🎨 Art
+                {% elif interest == "Music" %} 🎵 Music
+                {% elif interest == "Travel" %} ✈️ Travel
+                {% elif interest == "Sports" %} ⚽ Sports
+                {% elif interest == "Cooking" %} 🍳 Cooking
+                {% else %} {{ interest }}
+                {% endif %}
+                {% if not loop.last %}&nbsp;&nbsp;{% endif %}
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="interests-display">
+            <em>You haven't selected any interests yet.</em>
+        </div>
+    {% endif %}
+    
+    </div>
+
+    <div class="form-box">
+        <form action="/interests" method="POST">
+            <label><input type="checkbox" name="interests" value="Technology"> 💻 Technology</label>
+            <label><input type="checkbox" name="interests" value="Art"> 🎨 Art</label>
+            <label><input type="checkbox" name="interests" value="Music"> 🎵 Music</label>
+            <label><input type="checkbox" name="interests" value="Travel"> ✈️ Travel</label>
+            <label><input type="checkbox" name="interests" value="Sports"> ⚽ Sports</label>
+            <label><input type="checkbox" name="interests" value="Cooking"> 🍳 Cooking</label>
+            <button class="submit-btn" type="submit">Update Interests</button>
+        </form>
+    </div>
+</body>
+</html>
