@@ -3,6 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>Connexus</title>
+  <!-- MathJax for formulas -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <!-- Marked.js for markdown formatting -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -72,7 +79,7 @@
       text-align: left;
       max-height: 400px;
       overflow-y: auto;
-      white-space: pre-wrap;
+      white-space: normal;
     }
 
     .message {
@@ -118,37 +125,6 @@
       background-color: #ffe493;
       color: #1f8abe;
     }
-    .footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #1f8abe;
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-}
-
-.footer-btn {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    background-color: #9be3df;
-    padding: 10px 20px;
-    border-radius: 10px;
-    transition: background-color 0.3s;
-}
-
-.footer-btn:hover {
-    background-color: #ffe493;
-    color: #1f8abe;
-}
-
-.footer-btn.active {
-    background-color: #ffe493;
-    color: #1f8abe;
-}
   </style>
 </head>
 <body>
@@ -158,10 +134,9 @@
     <textarea id="user-input" placeholder="Enter a topic to explore!"></textarea><br>
     <div style="margin-bottom: 10px;">
       <button onclick="sendMessage()">Send</button>
-      <button onclick="clearMessages()" style="margin-left: 10px; background-color: #f44336;">Clear Chat</button>
+      <button onclick="clearMessages()" style="margin-left: 10px; background-color: #fbc72b;">Clear Chat</button>
     </div>
     <div id="chat-box"></div>
-    
   </div>
 
   <footer class="footer">
@@ -188,7 +163,7 @@
 
       const interests = "football";
       const formattedInput = `Explain ${input} to a student who is interested in ${interests}. Make the explanation clear and use an example that involves ${interests} to help them understand.`;
-      
+
       messages.push({ role: "user", content: formattedInput });
       renderMessages();
       inputBox.value = "";
@@ -204,7 +179,8 @@
         });
 
         const data = await res.json();
-        messages.pop(); 
+        messages.pop();
+        messages.pop();
         messages.push({ role: "assistant", content: data.reply || "No response from Conexus." });
         renderMessages();
       } catch (err) {
@@ -220,13 +196,22 @@
         const div = document.createElement("div");
         div.classList.add("message");
         div.classList.add(msg.role === "user" ? "user" : "assistant");
-        div.innerHTML = `<strong>${msg.role === "user" ? "You" : "Conexus"}:</strong> ${msg.content}`;
+
+        // Format markdown and render LaTeX
+        const formatted = marked.parse(msg.content);
+        div.innerHTML = `<strong>${msg.role === "user" ? "You" : "Conexus"}:</strong><br>${formatted}`;
+
         chatBox.appendChild(div);
       });
+
+      // Trigger MathJax to re-process the math
+      if (window.MathJax) {
+        MathJax.typesetPromise();
+      }
+
       chatBox.scrollTop = chatBox.scrollHeight;
     }
-  </script>
-  <script>
+
     function clearMessages() {
       messages = [
         {
@@ -236,6 +221,6 @@
       ];
       renderMessages();
     }
-  </script>  
+  </script>
 </body>
 </html>
