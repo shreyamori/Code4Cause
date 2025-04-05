@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect, url_for
 from dotenv import load_dotenv
 import openai
 
@@ -9,8 +9,27 @@ load_dotenv()
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 app = Flask(__name__)
+@app.route('/')
+def login_page():
+    return render_template('login.html')
 
-@app.route("/")
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.form['username']
+    password = request.form['password']
+    # No authentication check here
+    return redirect(url_for('home'))
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        # Normally you'd store this in a database
+        return redirect(url_for('login_page'))
+    return render_template('signup.html')
+
+@app.route("/home")
 def home():
     return render_template("index.html")
 
