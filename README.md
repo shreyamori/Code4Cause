@@ -1,5 +1,13 @@
 # Code4Cause
 
+## Connexus
+
+🔑 Key Goals:
+Clarity: Make the model understand the topic to explain.
+Context: Tell it the user’s interest for analogies/examples.
+Creativity: Let the model make it engaging (story, metaphor, real-world use).
+Structure: Guide it on how to present the response (e.g., explanation + example).
+
 Run this command: 
 pip install -r requirements.txt
 
