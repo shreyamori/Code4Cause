@@ -155,7 +155,7 @@
       const input = inputBox.value.trim();
       if (!input) return;
 
-      const interests = "football"; // You can later make this dynamic
+      const interests = "football"; 
       const isImagePrompt = input.toLowerCase().includes("generate image") ||
                             input.toLowerCase().includes("create image") ||
                             input.toLowerCase().includes("draw") ||
@@ -166,7 +166,6 @@
         renderMessages();
 
         try {
-          // Ask GPT-4o to rephrase the image prompt based on conversation
           const gptRes = await fetch("/chat", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -176,7 +175,6 @@
           const gptData = await gptRes.json();
           const rephrasedPrompt = gptData.reply;
 
-          // Send rephrased prompt to image generator
           const imageRes = await fetch("/image", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -184,7 +182,7 @@
           });
 
           const imageData = await imageRes.json();
-          messages.pop(); // remove "Generating..."
+          messages.pop(); 
 
           messages.push({ role: "user", content: input });
 
@@ -220,7 +218,7 @@
           });
 
           const data = await res.json();
-          messages.pop(); // remove "thinking..."
+          messages.pop(); 
           messages.push({ role: "assistant", content: data.reply || "No response from Connexus." });
           renderMessages();
         } catch (err) {
