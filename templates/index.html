@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ChatGPT Wrapper</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>ChatGPT Web App</h1>
+    <textarea id="user-input" placeholder="Type your question..."></textarea>
+    <button onclick="sendMessage()">Send</button>
+    <div id="response-box"></div>
+  </div>
+
+  <script>
+    async function sendMessage() {
+      const input = document.getElementById("user-input").value;
+      const resBox = document.getElementById("response-box");
+      resBox.innerHTML = "Loading...";
+
+      const res = await fetch("/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: input })
+      });
+
+      const data = await res.json();
+      resBox.innerHTML = data.reply || data.error;
+    }
+  </script>
+</body>
+</html>
