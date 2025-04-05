@@ -171,6 +171,13 @@
       const data = await res.json();
       resBox.innerHTML = data.reply || data.error;
     }
+    window.onload = function () {
+      const preset = {{ preset_message|tojson }};
+      if (preset && document.getElementById("user-input")) {
+    document.getElementById("user-input").value = preset;
+  }
+};
+
   </script>
   <footer class="footer">
     <a href="interests" class="footer-btn">🌟 Interests</a>
